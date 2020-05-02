@@ -37,23 +37,33 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected void onPostExecute(String response) {
-            String strDrink = null;
-            String strCategory = null;
-            String strAlcoholic = null;
+            String[] strDrink = null;
+            String[] strCategory = null;
+            String[] strAlcoholic = null;
             try {
                 JSONObject jsonResponse = new JSONObject(response);
                 JSONArray drinks = jsonResponse.getJSONArray("drinks");
-                JSONObject drink = drinks.getJSONObject(1);
-
-                strDrink = drink.getString("strDrink");
-                strCategory = drink.getString("strCategory");
-                strAlcoholic = drink.getString("strAlcoholic");
+                JSONObject drink;
+                strDrink = new String[drinks.length()];
+                strCategory = new String[drinks.length()];
+                strAlcoholic = new String[drinks.length()];
+                for (int i = 0; i < drinks.length(); i++) {
+                    drink = drinks.getJSONObject(i);
+                    strDrink[i] = drink.getString("strDrink");
+                    strCategory[i] = drink.getString("strCategory");
+                    strAlcoholic[i] = drink.getString("strAlcoholic");
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String resultString = "Cocktail: " + strDrink + "\n" +
-                    "Category: " + strCategory + "\n" + "Alcoholic: " + strAlcoholic;
-            result.setText(resultString);
+            StringBuilder resultString = new StringBuilder("");
+            for (int i = 0; i < strDrink.length; i++) {
+                String tmp = "Cocktail: " + strDrink[i] + "\n" +
+                        "Category: " + strCategory[i] + "\n" + "Alcoholic: " + strAlcoholic[i];
+                resultString.append(tmp).append("\n").append("=========").append("\n");
+            }
+
+            result.setText(resultString.toString());
         }
     }
 
