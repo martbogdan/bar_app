@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.barcoctail.utils.NetUtils;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class SearchScreen extends AppCompatActivity implements View.OnClickListener {
@@ -31,6 +32,12 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         URL generatedURL = NetUtils.generateURL(searchField.getText().toString());
-            result.setText(generatedURL.toString());
+        String response = null;
+        try {
+            response = NetUtils.getResponseFromURL(generatedURL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        result.setText(response);
     }
 }
