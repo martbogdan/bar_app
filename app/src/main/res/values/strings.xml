@@ -13,4 +13,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="search_drink">search drink</string>
     <string name="empty_result">Empty result</string>
+    <string name="enter_text_to_start_search">Enter text to start search</string>
 </resources>
