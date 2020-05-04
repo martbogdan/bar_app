@@ -59,7 +59,7 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
             if (drinksFound == null || drinksFound.length == 0) {
                 result.setText(R.string.noCocktFound);
             } else {
-                result.setText("found");
+                result.setText("");
                 ListView mListView = (ListView) findViewById(R.id.lvSearchedDrinks);
                 DrinkListAdapter drinkAdapter = new DrinkListAdapter(SearchScreen.this, R.layout.drinks_found, drinksFound);
                 mListView.setAdapter(drinkAdapter);
@@ -122,6 +122,7 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         new DrinkQueryTask().execute(generatedURL);
 
     }
+
 
     private static Drink getDrink(JSONObject jsonObject) throws JSONException, ParseException {
         Drink drink = new Drink();

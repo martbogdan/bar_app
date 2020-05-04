@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="40">
+
+        <ImageView
+            android:id="@+id/drinkImgInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="">
+        </ImageView>
+        <TextView
+            android:id="@+id/drinkNameInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+        android:id="@+id/drinkAlcoholInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/drinkGlassInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="20">
+
+    <TextView
+        android:id="@+id/drinkIngredientsInfo"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingredients"
+        android:textSize="20sp"/>
+
+        <ListView
+            android:id="@+id/drinkIngredientsInfoList"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            tools:ignore="DuplicateIds" />
+
+
+
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="40">
+
+        <TextView
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Instruction"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/drinkInstructionInfo"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/instruction"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
