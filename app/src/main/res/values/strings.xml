@@ -14,4 +14,5 @@
     <string name="search_drink">search drink</string>
     <string name="empty_result">Empty result</string>
     <string name="enter_text_to_start_search">Enter text to start search</string>
+    <string name="noCocktFound">No cocktails found</string>
 </resources>

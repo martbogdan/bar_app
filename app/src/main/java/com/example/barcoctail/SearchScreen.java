@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.barcoctail.utils.NetUtils;
 
@@ -24,6 +27,9 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
     private EditText searchField;
     private Button searchButton;
     private TextView result;
+    private ListView listView;
+    private Drink[] drinksFound = null;
+    private String[] drinkNames = null;
 
     class DrinkQueryTask extends AsyncTask<URL, Void, String> {
         @Override
@@ -39,7 +45,6 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected void onPostExecute(String response) {
-            Drink[] drinksFound = null;
             try {
                 JSONObject jsonResponse = new JSONObject(response);
                 JSONArray drinks = jsonResponse.getJSONArray("drinks");
@@ -51,17 +56,14 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
             } catch (JSONException | ParseException e) {
                 e.printStackTrace();
             }
-            StringBuilder resultString = new StringBuilder("");
-            if (drinksFound != null && drinksFound.length > 0) {
-                for (int i = 0; i < drinksFound.length; i++) {
-                    String tmp = "Cocktail: " + drinksFound[i].getStrDrink() + "\n" +
-                            "Category: " + drinksFound[i].getStrCategory() + "\n" + "Alcoholic: " + drinksFound[i].getStrAlcoholic();
-                    resultString.append(tmp).append("\n").append("=========").append("\n");
-                }
+            if (drinksFound == null || drinksFound.length == 0) {
+                result.setText(R.string.noCocktFound);
             } else {
-                resultString.append("No cocktails found");
+                result.setText("found");
+                ListView mListView = (ListView) findViewById(R.id.lvSearchedDrinks);
+                DrinkListAdapter drinkAdapter = new DrinkListAdapter(SearchScreen.this, R.layout.drinks_found, drinksFound);
+                mListView.setAdapter(drinkAdapter);
             }
-            result.setText(resultString.toString());
         }
     }
 
@@ -72,9 +74,47 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
 
         searchField = findViewById(R.id.drink_search_field);
         searchButton = findViewById(R.id.btnSearchDrink);
-        result = findViewById(R.id.tvSearchResult);
+        result = findViewById(R.id.resultSearch);
         searchButton.setOnClickListener(this);
+
+        if (drinksFound != null) {
+            //listListener();
+
+
+        }
+
+
+
     }
+
+    public void listListener() {
+
+        if (drinksFound != null) {
+            drinkNames = new String[drinksFound.length];
+            for (int i = 0; i < drinksFound.length; i++) {
+                drinkNames[i] = drinksFound[i].getStrDrink();
+            }
+        }
+
+        listView = (ListView) findViewById(R.id.lvSearchedDrinks);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.drinks_found, drinkNames);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String drinkName = (String) listView.getItemAtPosition(position);
+                        Toast.makeText(
+                                SearchScreen.this,
+                                "Cocktail name: " + drinkName,
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                }
+        );
+
+    }
+
 
     @Override
     public void onClick(View v) {

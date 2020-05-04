@@ -20,7 +20,8 @@
             android:hint="@string/search_drink"
             android:inputType="text"
             android:paddingBottom="10dp"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/btnSearchDrink"
@@ -30,14 +31,26 @@
             android:text="@string/btnSearch" />
     </LinearLayout>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/tvSearchResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/enter_text_to_start_search"/>
-    </ScrollView>
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/resultSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_text_to_start_search" />
+
+        <ListView
+            android:id="@+id/lvSearchedDrinks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+
+    </RelativeLayout>
+
+
 
 </LinearLayout>
