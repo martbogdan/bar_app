@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 public class DrinkInfoActivity extends AppCompatActivity {
 
     private ImageView drImg;
@@ -36,8 +39,19 @@ public class DrinkInfoActivity extends AppCompatActivity {
         drInstruction = (TextView) findViewById(R.id.drinkInstructionInfo);
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        drName.setText(name);
+        drName.setText("Name: " + intent.getStringExtra("name"));
+        drAlcohol.setText("Alcoholic: " + intent.getStringExtra("alcohol"));
+        drGlass.setText("Glass: " + intent.getStringExtra("glass"));
+        drInstruction.setText(intent.getStringExtra("instruction"));
+        String imgURL = intent.getStringExtra("imgURL");
+
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.bg_grey);
+        requestOptions.error(R.drawable.bg_grey);
+        Glide.with(DrinkInfoActivity.this)
+                .load(imgURL)
+                .apply(requestOptions)
+                .into(drImg);
     }
 
     public void setStrDrImg(String strDrImg) {

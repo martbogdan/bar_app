@@ -120,6 +120,10 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
 
                         Intent intent = new Intent(SearchScreen.this, DrinkInfoActivity.class);
                         intent.putExtra("name", drink.getStrDrink());
+                        intent.putExtra("alcohol", drink.getStrAlcoholic());
+                        intent.putExtra("glass", drink.getStrGlass());
+                        intent.putExtra("instruction", drink.getStrInstructions());
+                        intent.putExtra("imgURL", drink.getStrDrinkThumb());
                         startActivity(intent);
 
                     }

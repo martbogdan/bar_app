@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Drink drink = (Drink) listView.getItemAtPosition(position);
                 Intent intent = new Intent(MainActivity.this, DrinkInfoActivity.class);
                 intent.putExtra("name", drink.getStrDrink());
+                intent.putExtra("alcohol", drink.getStrAlcoholic());
+                intent.putExtra("glass", drink.getStrGlass());
+                intent.putExtra("instruction", drink.getStrInstructions());
+                intent.putExtra("imgURL", drink.getStrDrinkThumb());
                 startActivity(intent);
             }
         });
