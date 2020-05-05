@@ -25,13 +25,14 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 public class SearchScreen extends AppCompatActivity implements View.OnClickListener {
     private EditText searchField;
     private Button searchButton;
     private TextView result;
     private ListView listView;
-    private Drink[] drinksFound = null;
+    private ArrayList<Drink> drinksFound = null;
     private String[] drinkNames = null;
     private DBHelper dbHelper;
 
@@ -53,14 +54,14 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
                 JSONObject jsonResponse = new JSONObject(response);
                 JSONArray drinks = jsonResponse.getJSONArray("drinks");
                 JSONObject drink;
-                drinksFound = new Drink[drinks.length()];
+                drinksFound = new ArrayList<>();
                 for (int i = 0; i < drinks.length(); i++) {
-                    drinksFound[i] = getDrink(drinks.getJSONObject(i));
+                    drinksFound.add(getDrink(drinks.getJSONObject(i)));
                 }
             } catch (JSONException | ParseException e) {
                 e.printStackTrace();
             }
-            if (drinksFound == null || drinksFound.length == 0) {
+            if (drinksFound == null || drinksFound.size() == 0) {
                 result.setText(R.string.noCocktFound);
             } else {
                 result.setText("");
@@ -141,9 +142,9 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
     public void listListener() {
 
         if (drinksFound != null) {
-            drinkNames = new String[drinksFound.length];
-            for (int i = 0; i < drinksFound.length; i++) {
-                drinkNames[i] = drinksFound[i].getStrDrink();
+            drinkNames = new String[drinksFound.size()];
+            for (int i = 0; i < drinksFound.size(); i++) {
+                drinkNames[i] = drinksFound.get(i).getStrDrink();
             }
         }
 

@@ -19,7 +19,7 @@ public class DrinkListAdapter extends ArrayAdapter<Drink> {
     private Context context;
     private int resource;
 
-    public DrinkListAdapter(@NonNull Context context, int resource, @NonNull Drink[] objects) {
+    public DrinkListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Drink> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;

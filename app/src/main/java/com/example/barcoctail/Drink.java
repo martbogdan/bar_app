@@ -13,6 +13,58 @@ public class Drink {
     private String ingredient13, ingredient14, ingredient15;
     private String measure1, measure2, measure3, measure4, measure5, measure6, measure7, measure8, measure9, measure10, measure11, measure12, measure13, measure14, measure15;
 
+    public Drink() {
+    }
+
+    public Drink(String idDrink, String strDrink, String strCategory, String strAlcoholic,
+                 String strGlass, String strInstructions, String strDrinkThumb, String ingredient1,
+                 String ingredient2, String ingredient3, String ingredient4, String ingredient5,
+                 String ingredient6, String ingredient7, String ingredient8, String ingredient9,
+                 String ingredient10, String ingredient11, String ingredient12, String ingredient13,
+                 String ingredient14, String ingredient15, String measure1, String measure2,
+                 String measure3, String measure4, String measure5, String measure6,
+                 String measure7, String measure8, String measure9, String measure10,
+                 String measure11, String measure12, String measure13, String measure14,
+                 String measure15) {
+        this.idDrink = idDrink;
+        this.strDrink = strDrink;
+        this.strCategory = strCategory;
+        this.strAlcoholic = strAlcoholic;
+        this.strGlass = strGlass;
+        this.strInstructions = strInstructions;
+        this.strDrinkThumb = strDrinkThumb;
+        this.ingredient1 = ingredient1;
+        this.ingredient2 = ingredient2;
+        this.ingredient3 = ingredient3;
+        this.ingredient4 = ingredient4;
+        this.ingredient5 = ingredient5;
+        this.ingredient6 = ingredient6;
+        this.ingredient7 = ingredient7;
+        this.ingredient8 = ingredient8;
+        this.ingredient9 = ingredient9;
+        this.ingredient10 = ingredient10;
+        this.ingredient11 = ingredient11;
+        this.ingredient12 = ingredient12;
+        this.ingredient13 = ingredient13;
+        this.ingredient14 = ingredient14;
+        this.ingredient15 = ingredient15;
+        this.measure1 = measure1;
+        this.measure2 = measure2;
+        this.measure3 = measure3;
+        this.measure4 = measure4;
+        this.measure5 = measure5;
+        this.measure6 = measure6;
+        this.measure7 = measure7;
+        this.measure8 = measure8;
+        this.measure9 = measure9;
+        this.measure10 = measure10;
+        this.measure11 = measure11;
+        this.measure12 = measure12;
+        this.measure13 = measure13;
+        this.measure14 = measure14;
+        this.measure15 = measure15;
+    }
+
     public String getIdDrink() {
         return idDrink;
     }
