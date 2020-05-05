@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.ArrayList;
+
 public class DrinkInfoActivity extends AppCompatActivity {
 
     private ImageView drImg;
@@ -20,12 +22,7 @@ public class DrinkInfoActivity extends AppCompatActivity {
     private ListView drIngredients;
     private TextView drInstruction;
 
-    private String strDrImg;
-    private String strDrName;
-    private String strDrAlcohol;
-    private String strDrGlass;
-    private String[] strDrIngredients;
-    private String strDrInstruction;
+    private ArrayList<Ingredients> strDrIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +34,29 @@ public class DrinkInfoActivity extends AppCompatActivity {
         drAlcohol = (TextView) findViewById(R.id.drinkAlcoholInfo);
         drGlass = (TextView) findViewById(R.id.drinkGlassInfo);
         drInstruction = (TextView) findViewById(R.id.drinkInstructionInfo);
+        drIngredients = (ListView) findViewById(R.id.lvDrinkIngredientsInfoList);
 
         Intent intent = getIntent();
         drName.setText("Name: " + intent.getStringExtra("name"));
         drAlcohol.setText("Alcoholic: " + intent.getStringExtra("alcohol"));
         drGlass.setText("Glass: " + intent.getStringExtra("glass"));
         drInstruction.setText(intent.getStringExtra("instruction"));
+        // getting ArrayList
+        Bundle bundle = getIntent().getExtras();
+        strDrIngredients = (ArrayList<Ingredients>) bundle.getSerializable("ingredients");
+        ArrayList<Ingredients> listToPrint = new ArrayList<>();
+        int counter = 0;
+        for (int i = 0; i < strDrIngredients.size(); i++) {
+            if (!strDrIngredients.get(i).getIngredient().trim().equals("null")) {
+                listToPrint.add(strDrIngredients.get(i));
+                counter++;
+            }
+        }
+        drName.setText(String.valueOf(counter));
+        IngredientsListAdapter adapter = new IngredientsListAdapter(DrinkInfoActivity.this, R.layout.drink_info, listToPrint);
+        drIngredients.setAdapter(adapter);
+        // load image
         String imgURL = intent.getStringExtra("imgURL");
-
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.bg_grey);
         requestOptions.error(R.drawable.bg_grey);
@@ -52,29 +64,5 @@ public class DrinkInfoActivity extends AppCompatActivity {
                 .load(imgURL)
                 .apply(requestOptions)
                 .into(drImg);
-    }
-
-    public void setStrDrImg(String strDrImg) {
-        this.strDrImg = strDrImg;
-    }
-
-    public void setStrDrName(String strDrName) {
-        this.strDrName = strDrName;
-    }
-
-    public void setStrDrAlcohol(String strDrAlcohol) {
-        this.strDrAlcohol = strDrAlcohol;
-    }
-
-    public void setStrDrGlass(String strDrGlass) {
-        this.strDrGlass = strDrGlass;
-    }
-
-    public void setStrDrIngredients(String[] strDrIngredients) {
-        this.strDrIngredients = strDrIngredients;
-    }
-
-    public void setStrDrInstruction(String strDrInstruction) {
-        this.strDrInstruction = strDrInstruction;
     }
 }

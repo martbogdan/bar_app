@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.barcoctail.utils.NetUtils;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -43,12 +45,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Drink drink = (Drink) listView.getItemAtPosition(position);
+                ArrayList<Ingredients> ingredients = NetUtils.getIngredientsList(drink);
                 Intent intent = new Intent(MainActivity.this, DrinkInfoActivity.class);
                 intent.putExtra("name", drink.getStrDrink());
                 intent.putExtra("alcohol", drink.getStrAlcoholic());
                 intent.putExtra("glass", drink.getStrGlass());
                 intent.putExtra("instruction", drink.getStrInstructions());
                 intent.putExtra("imgURL", drink.getStrDrinkThumb());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("ingredients", ingredients);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

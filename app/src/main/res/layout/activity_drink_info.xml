@@ -47,7 +47,7 @@ android:orientation="vertical">
         android:textSize="20sp"/>
 
     <ListView
-        android:id="@+id/drinkIngredientsInfoList"
+        android:id="@+id/lvDrinkIngredientsInfoList"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         tools:ignore="DuplicateIds" />

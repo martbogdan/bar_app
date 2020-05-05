@@ -10,13 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class DrinkListAdapter extends ArrayAdapter<Drink> {
+public class IngredientsListAdapter extends ArrayAdapter<Ingredients> {
     private Context context;
     private int resource;
 
-    public DrinkListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Drink> objects) {
+    public IngredientsListAdapter(@NonNull Context context, int resource, @NonNull List<Ingredients> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
@@ -25,19 +25,16 @@ public class DrinkListAdapter extends ArrayAdapter<Drink> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        String img = getItem(position).getStrDrinkThumb();
-        String name = getItem(position).getStrDrink();
-        Drink drink = new Drink();
-        drink.setStrDrinkThumb(img);
-        drink.setStrDrink(name);
+        String ingredient = getItem(position).getIngredient();
+        String measure = getItem(position).getMeasure();
 
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource, parent, false);
 
-        //TextView tvImg = (TextView) convertView.findViewById(R.id.textImg);
-        TextView tvName = (TextView) convertView.findViewById(R.id.drinkName);
-        //tvImg.setText(img);
-        tvName.setText(name);
+        TextView tvIngredient = (TextView) convertView.findViewById(R.id.drinkIngredientInfo);
+        TextView tvMeasure = (TextView) convertView.findViewById(R.id.drinkMeasureInfo);
+        tvIngredient.setText(ingredient);
+        tvMeasure.setText(measure);
         return convertView;
     }
 }

@@ -9,13 +9,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.barcoctail.utils.NetUtils;
 
@@ -34,7 +32,6 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
     private TextView result;
     private ListView listView;
     private ArrayList<Drink> drinksFound = null;
-    private String[] drinkNames = null;
     private DBHelper dbHelper;
 
     class DrinkQueryTask extends AsyncTask<URL, Void, String> {
@@ -74,9 +71,8 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         DrinkInfoActivity infoActivity = new DrinkInfoActivity();
                         Drink drink = (Drink) mListView.getItemAtPosition(position);
-//                        infoActivity.setStrDrImg(drink.getStrDrinkThumb());
-//                        infoActivity.setStrDrName(drink.getStrDrink());
                         SQLiteDatabase database = dbHelper.getWritableDatabase();
+
                         ContentValues contentValues = new ContentValues();
                         contentValues.put(DBHelper.KEY_ID, drink.getIdDrink());
                         contentValues.put(DBHelper.KEY_NAME, drink.getStrDrink());
@@ -118,14 +114,18 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
                         database.insert(DBHelper.TABLE_DRINKS, null, contentValues);
                         dbHelper.close();
 
+                        ArrayList<Ingredients> ingredients = NetUtils.getIngredientsList(drink);
+
                         Intent intent = new Intent(SearchScreen.this, DrinkInfoActivity.class);
                         intent.putExtra("name", drink.getStrDrink());
                         intent.putExtra("alcohol", drink.getStrAlcoholic());
                         intent.putExtra("glass", drink.getStrGlass());
                         intent.putExtra("instruction", drink.getStrInstructions());
                         intent.putExtra("imgURL", drink.getStrDrinkThumb());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("ingredients", ingredients);
+                        intent.putExtras(bundle);
                         startActivity(intent);
-
                     }
                 });
             }
@@ -141,50 +141,14 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         searchButton = findViewById(R.id.btnSearchDrink);
         result = findViewById(R.id.resultSearch);
         searchButton.setOnClickListener(this);
-
         dbHelper = new DBHelper(this);
-
-//        if (drinksFound != null) {
-//            //listListener();
-//        }
     }
-
-    public void listListener() {
-
-        if (drinksFound != null) {
-            drinkNames = new String[drinksFound.size()];
-            for (int i = 0; i < drinksFound.size(); i++) {
-                drinkNames[i] = drinksFound.get(i).getStrDrink();
-            }
-        }
-
-        listView = (ListView) findViewById(R.id.lvSearchedDrinks);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.drinks_found, drinkNames);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String drinkName = (String) listView.getItemAtPosition(position);
-                        Toast.makeText(
-                                SearchScreen.this,
-                                "Cocktail name: " + drinkName,
-                                Toast.LENGTH_LONG
-                        ).show();
-                    }
-                }
-        );
-
-    }
-
 
     @Override
     public void onClick(View v) {
         URL generatedURL = NetUtils.generateURL(searchField.getText().toString());
         new DrinkQueryTask().execute(generatedURL);
-
     }
-
 
     private static Drink getDrink(JSONObject jsonObject) throws JSONException, ParseException {
         Drink drink = new Drink();
