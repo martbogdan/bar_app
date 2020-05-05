@@ -5,10 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
@@ -25,18 +29,22 @@ public class DrinkListAdapter extends ArrayAdapter<Drink> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        String img = getItem(position).getStrDrinkThumb();
+        String imgURL = getItem(position).getStrDrinkThumb();
         String name = getItem(position).getStrDrink();
-        Drink drink = new Drink();
-        drink.setStrDrinkThumb(img);
-        drink.setStrDrink(name);
 
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource, parent, false);
 
-        //TextView tvImg = (TextView) convertView.findViewById(R.id.textImg);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.textImg);
         TextView tvName = (TextView) convertView.findViewById(R.id.drinkName);
-        //tvImg.setText(img);
+
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.bg_grey);
+        requestOptions.error(R.drawable.bg_grey);
+        Glide.with(context)
+                .load(imgURL)
+                .apply(requestOptions)
+                .into(imageView);
         tvName.setText(name);
         return convertView;
     }
