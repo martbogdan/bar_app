@@ -3,6 +3,7 @@ package com.example.barcoctail;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -116,6 +117,11 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
                         contentValues.put(DBHelper.KEY_MEASURE15, drink.getMeasure15());
                         database.insert(DBHelper.TABLE_DRINKS, null, contentValues);
                         dbHelper.close();
+
+                        Intent intent = new Intent(SearchScreen.this, DrinkInfoActivity.class);
+                        intent.putExtra("name", drink.getStrDrink());
+                        startActivity(intent);
+
                     }
                 });
             }

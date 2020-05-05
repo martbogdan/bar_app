@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Bar Coctail</string>
-    <string name="name">Welcome to Cocktail-Bar</string>
+    <string name="welcome_main">Welcome to Cocktail-Bar \n Your history is empty</string>
     <string name="btnSearch">Search</string>
     <string name="title_activity_search_screen">SearchScreen</string>
     <!-- Strings used for fragments for navigation -->

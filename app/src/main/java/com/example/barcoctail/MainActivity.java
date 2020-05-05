@@ -7,8 +7,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -18,21 +20,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Drink> drinksFromDB;
     private DBHelper dbHelper;
     private ListView listView;
+    private TextView textViewMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textViewMain = (TextView) findViewById(R.id.textViewMain);
         btnSearch = (Button) findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(this);
 
         dbHelper = new DBHelper(this);
         drinksFromDB = getDrinksFromBD(dbHelper);
-
+        if (drinksFromDB != null || drinksFromDB.size() > 0) {
+            textViewMain.setText("");
+        }
         listView = (ListView) findViewById(R.id.lvDrinksFromDB);
         DrinkListAdapter drinkAdapter = new DrinkListAdapter(MainActivity.this, R.layout.drinks_found, drinksFromDB);
         listView.setAdapter(drinkAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Drink drink = (Drink) listView.getItemAtPosition(position);
+                Intent intent = new Intent(MainActivity.this, DrinkInfoActivity.class);
+                intent.putExtra("name", drink.getStrDrink());
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -49,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private static ArrayList<Drink> getDrinksFromBD (DBHelper dbHelper) {
+    private static ArrayList<Drink> getDrinksFromBD(DBHelper dbHelper) {
         ArrayList<Drink> drinks = new ArrayList<>();
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         Cursor cursor = database.query(DBHelper.TABLE_DRINKS, null, null, null, null, null, null);

@@ -2,6 +2,7 @@ package com.example.barcoctail;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,6 +34,10 @@ public class DrinkInfoActivity extends AppCompatActivity {
         drAlcohol = (TextView) findViewById(R.id.drinkAlcoholInfo);
         drGlass = (TextView) findViewById(R.id.drinkGlassInfo);
         drInstruction = (TextView) findViewById(R.id.drinkInstructionInfo);
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        drName.setText(name);
     }
 
     public void setStrDrImg(String strDrImg) {
