@@ -45,14 +45,14 @@ public class DrinkInfoActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         strDrIngredients = (ArrayList<Ingredients>) bundle.getSerializable("ingredients");
         ArrayList<Ingredients> listToPrint = new ArrayList<>();
-        int counter = 0;
         for (int i = 0; i < strDrIngredients.size(); i++) {
             if (!strDrIngredients.get(i).getIngredient().trim().equals("null")) {
+                if (strDrIngredients.get(i).getMeasure().equals("null")) {
+                    strDrIngredients.get(i).setMeasure("");
+                }
                 listToPrint.add(strDrIngredients.get(i));
-                counter++;
             }
         }
-        drName.setText(String.valueOf(counter));
         IngredientsListAdapter adapter = new IngredientsListAdapter(DrinkInfoActivity.this, R.layout.drink_info, listToPrint);
         drIngredients.setAdapter(adapter);
         // load image
