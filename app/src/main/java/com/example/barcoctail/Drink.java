@@ -1,16 +1,9 @@
 package com.example.barcoctail;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Drink {
-    private Long idDrink;
+    private String idDrink;
     private String strDrink;
-    private String strDrinkAlternate;
-    private String strTags;
     private String strCategory;
-    private String strIBA;
     private String strAlcoholic;
     private String strGlass;
     private String strInstructions;
@@ -19,15 +12,13 @@ public class Drink {
     private String ingredient7, ingredient8, ingredient9, ingredient10, ingredient11, ingredient12;
     private String ingredient13, ingredient14, ingredient15;
     private String measure1, measure2, measure3, measure4, measure5, measure6, measure7, measure8, measure9, measure10, measure11, measure12, measure13, measure14, measure15;
-    private String strCreativeCommonsConfirmed;
-    private Date dateModified;
 
-    public Long getIdDrink() {
+    public String getIdDrink() {
         return idDrink;
     }
 
     public void setIdDrink(String idDrink) {
-        this.idDrink = Long.parseLong(idDrink);
+        this.idDrink = idDrink;
     }
 
     public String getStrDrink() {
@@ -38,36 +29,12 @@ public class Drink {
         this.strDrink = strDrink;
     }
 
-    public String getStrDrinkAlternate() {
-        return strDrinkAlternate;
-    }
-
-    public void setStrDrinkAlternate(String strDrinkAlternate) {
-        this.strDrinkAlternate = strDrinkAlternate;
-    }
-
-    public String getStrTags() {
-        return strTags;
-    }
-
-    public void setStrTags(String strTags) {
-        this.strTags = strTags;
-    }
-
     public String getStrCategory() {
         return strCategory;
     }
 
     public void setStrCategory(String strCategory) {
         this.strCategory = strCategory;
-    }
-
-    public String getStrIBA() {
-        return strIBA;
-    }
-
-    public void setStrIBA(String strIBA) {
-        this.strIBA = strIBA;
     }
 
     public String getStrAlcoholic() {
@@ -340,21 +307,5 @@ public class Drink {
 
     public void setMeasure15(String measure15) {
         this.measure15 = measure15;
-    }
-
-    public String getStrCreativeCommonsConfirmed() {
-        return strCreativeCommonsConfirmed;
-    }
-
-    public void setStrCreativeCommonsConfirmed(String strCreativeCommonsConfirmed) {
-        this.strCreativeCommonsConfirmed = strCreativeCommonsConfirmed;
-    }
-
-    public Date getDateModified() {
-        return dateModified;
-    }
-
-    public void setDateModified(String dateModified) throws ParseException {
-        this.dateModified = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateModified);
     }
 }

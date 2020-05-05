@@ -16,6 +16,13 @@ public class DrinkInfoActivity extends AppCompatActivity {
     private ListView drIngredients;
     private TextView drInstruction;
 
+    private String strDrImg;
+    private String strDrName;
+    private String strDrAlcohol;
+    private String strDrGlass;
+    private String[] strDrIngredients;
+    private String strDrInstruction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,5 +33,29 @@ public class DrinkInfoActivity extends AppCompatActivity {
         drAlcohol = (TextView) findViewById(R.id.drinkAlcoholInfo);
         drGlass = (TextView) findViewById(R.id.drinkGlassInfo);
         drInstruction = (TextView) findViewById(R.id.drinkInstructionInfo);
+    }
+
+    public void setStrDrImg(String strDrImg) {
+        this.strDrImg = strDrImg;
+    }
+
+    public void setStrDrName(String strDrName) {
+        this.strDrName = strDrName;
+    }
+
+    public void setStrDrAlcohol(String strDrAlcohol) {
+        this.strDrAlcohol = strDrAlcohol;
+    }
+
+    public void setStrDrGlass(String strDrGlass) {
+        this.strDrGlass = strDrGlass;
+    }
+
+    public void setStrDrIngredients(String[] strDrIngredients) {
+        this.strDrIngredients = strDrIngredients;
+    }
+
+    public void setStrDrInstruction(String strDrInstruction) {
+        this.strDrInstruction = strDrInstruction;
     }
 }

@@ -2,6 +2,8 @@ package com.example.barcoctail;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +33,7 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
     private ListView listView;
     private Drink[] drinksFound = null;
     private String[] drinkNames = null;
+    private DBHelper dbHelper;
 
     class DrinkQueryTask extends AsyncTask<URL, Void, String> {
         @Override
@@ -60,9 +64,59 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
                 result.setText(R.string.noCocktFound);
             } else {
                 result.setText("");
-                ListView mListView = (ListView) findViewById(R.id.lvSearchedDrinks);
+                final ListView mListView = (ListView) findViewById(R.id.lvSearchedDrinks);
                 DrinkListAdapter drinkAdapter = new DrinkListAdapter(SearchScreen.this, R.layout.drinks_found, drinksFound);
                 mListView.setAdapter(drinkAdapter);
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        DrinkInfoActivity infoActivity = new DrinkInfoActivity();
+                        Drink drink = (Drink) mListView.getItemAtPosition(position);
+//                        infoActivity.setStrDrImg(drink.getStrDrinkThumb());
+//                        infoActivity.setStrDrName(drink.getStrDrink());
+                        SQLiteDatabase database = dbHelper.getWritableDatabase();
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put(DBHelper.KEY_ID, drink.getIdDrink());
+                        contentValues.put(DBHelper.KEY_NAME, drink.getStrDrink());
+                        contentValues.put(DBHelper.KEY_CATEGORY, drink.getStrCategory());
+                        contentValues.put(DBHelper.KEY_ALCOHOL, drink.getStrAlcoholic());
+                        contentValues.put(DBHelper.KEY_GLASS, drink.getStrGlass());
+                        contentValues.put(DBHelper.KEY_INSTRUCTIONS, drink.getStrInstructions());
+                        contentValues.put(DBHelper.KEY_IMG, drink.getStrDrinkThumb());
+                        contentValues.put(DBHelper.KEY_ING1, drink.getIngredient1());
+                        contentValues.put(DBHelper.KEY_ING2, drink.getIngredient2());
+                        contentValues.put(DBHelper.KEY_ING3, drink.getIngredient3());
+                        contentValues.put(DBHelper.KEY_ING4, drink.getIngredient4());
+                        contentValues.put(DBHelper.KEY_ING5, drink.getIngredient5());
+                        contentValues.put(DBHelper.KEY_ING6, drink.getIngredient6());
+                        contentValues.put(DBHelper.KEY_ING7, drink.getIngredient7());
+                        contentValues.put(DBHelper.KEY_ING8, drink.getIngredient8());
+                        contentValues.put(DBHelper.KEY_ING9, drink.getIngredient9());
+                        contentValues.put(DBHelper.KEY_ING10, drink.getIngredient10());
+                        contentValues.put(DBHelper.KEY_ING11, drink.getIngredient11());
+                        contentValues.put(DBHelper.KEY_ING12, drink.getIngredient12());
+                        contentValues.put(DBHelper.KEY_ING13, drink.getIngredient13());
+                        contentValues.put(DBHelper.KEY_ING14, drink.getIngredient14());
+                        contentValues.put(DBHelper.KEY_ING15, drink.getIngredient15());
+                        contentValues.put(DBHelper.KEY_MEASURE1, drink.getMeasure1());
+                        contentValues.put(DBHelper.KEY_MEASURE2, drink.getMeasure2());
+                        contentValues.put(DBHelper.KEY_MEASURE3, drink.getMeasure3());
+                        contentValues.put(DBHelper.KEY_MEASURE4, drink.getMeasure4());
+                        contentValues.put(DBHelper.KEY_MEASURE5, drink.getMeasure5());
+                        contentValues.put(DBHelper.KEY_MEASURE6, drink.getMeasure6());
+                        contentValues.put(DBHelper.KEY_MEASURE7, drink.getMeasure7());
+                        contentValues.put(DBHelper.KEY_MEASURE8, drink.getMeasure8());
+                        contentValues.put(DBHelper.KEY_MEASURE9, drink.getMeasure9());
+                        contentValues.put(DBHelper.KEY_MEASURE10, drink.getMeasure10());
+                        contentValues.put(DBHelper.KEY_MEASURE11, drink.getMeasure11());
+                        contentValues.put(DBHelper.KEY_MEASURE12, drink.getMeasure12());
+                        contentValues.put(DBHelper.KEY_MEASURE13, drink.getMeasure13());
+                        contentValues.put(DBHelper.KEY_MEASURE14, drink.getMeasure14());
+                        contentValues.put(DBHelper.KEY_MEASURE15, drink.getMeasure15());
+                        database.insert(DBHelper.TABLE_DRINKS, null, contentValues);
+                        dbHelper.close();
+                    }
+                });
             }
         }
     }
@@ -77,14 +131,11 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         result = findViewById(R.id.resultSearch);
         searchButton.setOnClickListener(this);
 
-        if (drinksFound != null) {
-            //listListener();
+        dbHelper = new DBHelper(this);
 
-
-        }
-
-
-
+//        if (drinksFound != null) {
+//            //listListener();
+//        }
     }
 
     public void listListener() {
@@ -128,10 +179,7 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         Drink drink = new Drink();
         drink.setIdDrink(jsonObject.getString("idDrink"));
         drink.setStrDrink(jsonObject.getString("strDrink"));
-        drink.setStrDrinkAlternate(jsonObject.getString("strDrinkAlternate"));
-        drink.setStrTags(jsonObject.getString("strTags"));
         drink.setStrCategory(jsonObject.getString("strCategory"));
-        drink.setStrIBA(jsonObject.getString("strIBA"));
         drink.setStrAlcoholic(jsonObject.getString("strAlcoholic"));
         drink.setStrGlass(jsonObject.getString("strGlass"));
         drink.setStrInstructions(jsonObject.getString("strInstructions"));
@@ -166,8 +214,6 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
         drink.setMeasure13(jsonObject.getString("strMeasure13"));
         drink.setMeasure14(jsonObject.getString("strMeasure14"));
         drink.setMeasure15(jsonObject.getString("strMeasure15"));
-        drink.setStrCreativeCommonsConfirmed(jsonObject.getString("strCreativeCommonsConfirmed"));
-        drink.setDateModified(jsonObject.getString("dateModified"));
         return drink;
     }
 }

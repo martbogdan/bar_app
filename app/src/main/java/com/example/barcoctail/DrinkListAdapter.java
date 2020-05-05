@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +37,18 @@ public class DrinkListAdapter extends ArrayAdapter<Drink> {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource, parent, false);
 
-        TextView tvImg = (TextView) convertView.findViewById(R.id.textImg);
+        //TextView tvImg = (TextView) convertView.findViewById(R.id.textImg);
         TextView tvName = (TextView) convertView.findViewById(R.id.drinkName);
 
-        tvImg.setText(img);
+        //tvImg.setText(img);
         tvName.setText(name);
 
         return convertView;
     }
 }
+//    RequestOptions requestOptions = new RequestOptions();
+//        requestOptions.placeholder(R.drawable.logo);
+//                requestOptions.error(R.drawable.logo);
+//
+//
+//                Glide.with(convertView).load(img).apply(requestOptions).into(tvImg);
