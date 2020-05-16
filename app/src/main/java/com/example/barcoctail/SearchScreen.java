@@ -145,6 +145,12 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void onClick(View v) {
         URL generatedURL = NetUtils.generateURL(searchField.getText().toString());
         new DrinkQueryTask().execute(generatedURL);

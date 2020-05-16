@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         dbHelper = new DBHelper(this);
         drinksFromDB = getDrinksFromBD(dbHelper);
-        if (drinksFromDB != null || drinksFromDB.size() > 0) {
+        if (drinksFromDB != null) {
             textViewMain.setText("");
-        }
+
         listView = (ListView) findViewById(R.id.lvDrinksFromDB);
         DrinkListAdapter drinkAdapter = new DrinkListAdapter(MainActivity.this, R.layout.drinks_found, drinksFromDB);
         listView.setAdapter(drinkAdapter);
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
+    }
         dbHelper.close();
     }
 
@@ -72,6 +73,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private static ArrayList<Drink> getDrinksFromBD(DBHelper dbHelper) {
