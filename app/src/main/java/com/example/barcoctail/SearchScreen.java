@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.barcoctail.utils.NetUtils;
 
@@ -58,6 +60,11 @@ public class SearchScreen extends AppCompatActivity implements View.OnClickListe
                 }
             } catch (JSONException | ParseException e) {
                 e.printStackTrace();
+            } catch (NullPointerException e) {
+                Toast toast = Toast.makeText(SearchScreen.this,
+                        "No internet connection or resource not found", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
             if (drinksFound == null || drinksFound.size() == 0) {
                 result.setText(R.string.noCocktFound);

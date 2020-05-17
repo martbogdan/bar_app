@@ -39,6 +39,8 @@
             android:id="@+id/resultSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:gravity="center"
             android:text="@string/enter_text_to_start_search" />
 
         <ListView
